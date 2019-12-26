@@ -1,0 +1,36 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include layouts/header.ejs %>	
+
+<!-- Main content -->
+    <div class="content">
+      <div class="container">
+        <% if (messages.error) { %>
+           <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h5><i class="icon fas fa-ban"></i> ERROR!</h5><%- messages.error %>
+            </div> 
+        <% } %>
+ 
+        <% if (messages.success) { %>
+           
+          <div class="alert alert-success alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      <h5><i class="icon fas fa-check"></i> Sucess!</h5><%- messages.success %>
+                    </div>
+        <% } %> 
+
+        <div class="row">
+            
+            
+        
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+<!--
+including footer content which is common for all pages
+-->
+<%- include layouts/footer.ejs %>

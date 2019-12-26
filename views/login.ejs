@@ -1,0 +1,67 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include layouts/header.ejs %> 
+
+ <!-- Main content -->
+    <div class="content">
+      <div class="container">
+        <% if (messages.error) { %>
+           <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h5><i class="icon fas fa-ban"></i> ERROR!</h5><%- messages.error %>
+            </div> 
+        <% } %>
+ 
+        <% if (messages.success) { %>
+           
+          <div class="alert alert-success alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      <h5><i class="icon fas fa-check"></i> Sucess!</h5><%- messages.success %>
+                    </div>
+        <% } %> 
+
+        <div class="row">
+            
+              <div class="col-md-8 card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Sign In</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <!-- form start -->
+                  <form  role="form" action="/login" method="post" name="form1">
+                     <div class="card-body">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                      </div>
+                     
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <input type="hidden" name="user_role" value="user">
+                        <label class="form-check-label" for="exampleCheck1">Check me in</label>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </form>
+              </div>
+             <!-- /.card -->
+        
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+
+<!--
+including footer content which is common for all pages
+-->
+<%- include layouts/footer.ejs %>

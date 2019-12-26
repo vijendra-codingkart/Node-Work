@@ -1,0 +1,67 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ../layouts/header.ejs %>
+
+<% if (messages.error) { %>
+	<p style="color:red"><%- messages.error %></p>
+<% } %>
+
+<% if (messages.success) { %>
+	<p style="color:green"><%- messages.success %></p>
+<% } %>
+ 
+<form action="/question/submit_qty" method="post" name="form1">
+  <% if (data) { count = 1 %>
+
+	<% data.forEach(function(question){ %>
+		<div class="row" style="margin-left: 50px; ">
+			<h2>Q.<%=  count %> <%= question.question_name %></h2>
+
+ 			<div class="col-md-2">
+				<% if (question.question_type == 1) { %>
+				 <input type="radio" name="question_type"  value="A" /> <%= question.option_a %>
+				<% }else{ %>
+				<input type="checkbox" name="question_type"  value="A" /> <%= question.option_a %>
+				<% } %>
+			</div>
+			<div class="col-md-2">
+				<% if (question.question_type == 1) { %>
+				 <input type="radio" name="question_type"  value="A" /> <%= question.option_b %>
+				<% }else{ %>
+				<input type="checkbox" name="question_type"  value="A" /> <%= question.option_b %>
+				<% } %>
+			</div>
+			<div class="col-md-2">
+				<% if (question.question_type == 1) { %>
+				 <input type="radio" name="question_type"  value="A" /> <%= question.option_c %>
+				<% }else{ %>
+				<input type="checkbox" name="question_type"  value="A" /> <%= question.option_c %>
+				<% } %>
+			</div>
+			<div class="col-md-2">
+				<% if (question.question_type == 1) { %>
+				 <input type="radio" name="question_type"  value="A" /> <%= question.option_d %>
+				<% }else{ %>
+				<input type="checkbox" name="question_type"  value="A" /> <%= question.option_d %>
+				<% } %>
+			</div>
+			<div class="col-md-2">
+				<% if (question.question_type == 1) { %>
+				 <input type="radio" name="question_type"  value="A" /> <%= question.option_e %>
+				<% }else{ %>
+				<input type="checkbox" name="question_type"  value="A" /> <%= question.option_e %>
+				<% } %>
+			</div> 
+		</div> 
+		<hr></hr>
+		 
+	<% count++ }) %>
+	<% } %>
+</br><br>
+	<input type="submit" name="Submit" value="Submit Ans" />
+ </form>
+<!--
+including footer content which is common for all pages
+-->
+<%- include ../layouts/footer.ejs %>

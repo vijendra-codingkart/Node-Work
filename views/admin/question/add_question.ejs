@@ -1,0 +1,193 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ../include/header.ejs %>	 
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Question</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Question</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section> 
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+
+            	<div class="card-header">
+	              <h3 class="card-title">Add New Question</h3>
+	               <br>
+	               <% if (messages.error) { %>
+						<p style="color:red"><%- messages.error %></p>
+					<% } %>
+
+					<% if (messages.success) { %>
+						<p style="color:green"><%- messages.success %></p>
+					<% } %> 
+ 	            </div>
+	            <!-- /.card-header -->
+	            <div class="card-body">
+
+					<form action="/admin/questions/add" method="post" name="form1">
+						<table  border="0">
+							<tbody id="last_option">
+							<tr> 
+								<td>Question Name</td>
+								<td><input type="text" name="question_name" id="question_name" value="<%= question_name %>" /></td>
+							</tr>
+							<tr> 
+								<td>Question Type</td>
+								<td>
+								 <% if (question_type == 1 || question_type == "") { %>
+								 <input type="radio" onclick="set_answer_attr(0);" name="question_type" checked="" value="1" /> Single 
+								 <% }else{ %>
+								 <input type="radio" onclick="set_answer_attr(0);" name="question_type" value="1" /> Single 
+								 <% } %>
+								 <% if (question_type == 2) { %>
+								 <input type="radio" onclick="set_answer_attr(1);" name="question_type" checked="" value="2" /> Maltipal 
+								 <% }else{ %>
+								 <input type="radio" onclick="set_answer_attr(1);" name="question_type" value="2" /> Maltipal 
+								 <% } %> 
+							</tr>
+							<tr> 
+								<td>Question Time(minutes)</td>
+								<td><input type="time" step="2" name="question_time" value="<%= question_time %>" /></td>
+							</tr>
+							<tr> 
+								<td>Question Hint</td>
+								<td><input type="text" name="question_hint" value="<%= question_hint %>" /></td>
+							</tr>
+							<tr> 
+								<td>Option A</td>
+								<td><input type="text" name="option_a" value="<%= option_a %>" /></td>
+							</tr>
+							<tr> 
+								<td>Option B</td>
+								<td><input type="text" name="option_b" value="<%= option_b %>" /></td>
+							</tr>
+							<tr> 
+								<td>Option C</td>
+								<td><input type="text" name="option_c" value="<%= option_c %>" /></td>
+							</tr>
+							<tr> 
+								<td>Option D</td>
+								<td><input type="text" name="option_d" value="<%= option_d %>" /></td>
+							</tr>
+							<tr > 
+								<td>Option E</td>
+								<td><input type="text" name="option_e" value="<%= option_e %>" /></td>
+							</tr>
+							<tr > 
+								<td>Answer</td>
+								<td>
+									<% if (question_type == 1) { %>
+									<select id="answer" name="answer[]">
+ 
+									<% } else { %>
+									<select id="answer" name="answer[]" multiple>
+ 									<% } %>
+
+ 									<% if (answer) { %> 
+ 										<% if (answer.includes('A') ) { %>
+										<option value="A" selected="">Option A</option>
+										<% }else{ %>
+										<option value="A">Option A</option>
+										<% } %>
+										<% if (answer.includes('B')) { %>
+										<option value="B" selected="">Option B</option>
+										<% }else{ %>
+										<option value="B" >Option B</option>
+										<% } %>  
+										<% if (answer.includes('C')) { %>
+										<option value="C" selected="">Option C</option>
+										<% }else{ %>
+										<option value="C" >Option C</option>
+										<% } %> 
+										<% if (answer.includes('D')) { %>
+										<option value="D" selected="">Option D</option>
+										<% }else{ %>
+										<option value="D" >Option D</option>
+										<% } %> 
+										<% if (answer.includes('E')) { %>
+										<option value="E" selected="">Option E</option>
+										<% }else{ %>
+										<option value="E" >Option E</option>
+										<% } %>  
+								    <% } %>
+ 					 				</select>
+					 			</td>
+							</tr> 
+							<% if (options) { count=6 %>
+							<% options.forEach(function(question_name){ %>
+
+								<tr > 
+									<td>Option <%= count %></td>
+									<td><input type="text" name="options[]" value="<%= question_name %>" /></td>
+								</tr> 
+							<% count++ }) %>
+							<% } %>
+
+						</tbody> 
+						</table>
+						<input type="submit" name="Submit" value="Add" />
+						 <button type="button" onclick="add_new_question();" id="add_new" >Add New Options</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<script type="text/javascript">
+	var total_q = 5;
+
+	function set_answer_attr(attrVal=0){
+
+		if(attrVal == '1'){
+			$('#answer').prop('multiple', true); 
+		}else{
+			$('#answer').prop('multiple', false); 
+		} 
+		$('#answer').prop('selected', false);
+	}
+
+	function add_new_question()
+	{
+ 		total_q++;
+		var html = '';
+		html += '<tr><td> New Option '+total_q+'</td>'; 
+		html += '<td><input type="text" name="options[]" value="" /></td>'; 
+		html += '</tr>';
+		document.getElementById('last_option').innerHTML +=html;
+		 
+		var sel = document.getElementById('answer');
+
+		// create new option element
+		var opt = document.createElement('option');
+  
+		// create text node to add to option element (opt)
+		opt.appendChild( document.createTextNode('Option '+total_q) );
+
+		// set value property of opt
+		opt.value = total_q; 
+
+		// add opt to end of select box (sel)
+		// sel.appendChild(opt); 
+	}
+</script>
+<!--
+including footer content which is common for all pages
+-->
+<%- include ../include/footer.ejs %>
