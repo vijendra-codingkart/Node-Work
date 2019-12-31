@@ -1,6 +1,7 @@
 <!--
 including header content which is common for all pages
 --> 
+<%- include layouts/header.ejs %>
  <!-- Main content -->
     <div class="content">
       <div class="container">
@@ -30,7 +31,7 @@ including header content which is common for all pages
                   <div class="card-body">
                     <div class="form-group">
                       <label for="exampleInputName">Name</label>
-                      <input name="name" type="name" class="form-control" id="exampleInputName" placeholder="Enter email">
+                      <input name="name" type="name" class="form-control" id="exampleInputName" placeholder="Enter Name">
                     </div>
 
                     <div class="form-group">
@@ -45,7 +46,7 @@ including header content which is common for all pages
                   <!-- /.card-body -->
                    <div class="card-footer">
                     <input type="hidden" name="user_role" value="user">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" id="form_btn_sbm" class="btn btn-primary">Submit</button>
                   </div>
                 </form>  
               </div>
@@ -57,6 +58,56 @@ including header content which is common for all pages
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
+    <script type="text/javascript">
+      jQuery(document).ready(function(){
+        jQuery("#form_btn_sbm").prop("disabled", true);
+
+        jQuery(document).on('blur', '#exampleInputEmail1', function(e){
+          e.preventDefault();
+          var email_add = jQuery(this).val();
+          var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+          jQuery('.error').remove();
+
+
+          var form_error = 0;
+
+          if(email_add == ""){
+                form_error=1; 
+              $('#exampleInputEmail1').after('<label class="error" style="color:red;font-size: 12px;"> Please enter your email address</label>');
+          } 
+          else if(!emailReg.test(email_add)){
+              form_error=1; 
+              $('#exampleInputEmail1').after('<label class="error" style="color:red;font-size: 12px;"> Please enter a valid email address</label>');
+          }
+
+          if(form_error == 0){ 
+
+            jQuery("#form_btn_sbm").prop("disabled", true);
+            var form_data = {
+                     'email' : email_add
+                    };
+            jQuery.ajax({
+                url: "/email_exists",
+                type: "POST",
+                dataType: "json",
+                data: form_data,
+                success: function(data) {
+                  console.log(data);
+                  if(data.status == 1){
+                    $('#exampleInputEmail1').after('<label class="error" style="color:red;font-size: 12px;"> This email address already exists.</label>');
+                  }else{
+                     jQuery("#form_btn_sbm").prop("disabled", false);
+                  } 
+                }, 
+                error: function() {
+                  console.log('process error');
+                },
+            });
+          } 
+        });
+      })
+
+    </script>
 
 	 
 <!--

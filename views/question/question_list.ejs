@@ -60,10 +60,12 @@ including header content which is common for all pages
      		<% if (sess.question_time) { %>
      		<% timer_time = sess.question_time.timer_time  %>
      		<% timer_time_queId = sess.question_time.quesId  %>
-     		<% } %>
+     		<% } %> 
 
+			<% data.forEach(function(question){  more = question.more_questions %>
 
-			<% data.forEach(function(question){ %>
+				  
+				 
 
 					<% display='none'; classActive=''; 
 					   ques_time =  question.question_time;
@@ -128,6 +130,27 @@ including header content which is common for all pages
 								<% } %>
 							</div> 
 
+							<%  if (question.more_questions != '') {  moreCount = 6; %> 
+
+							<% question.moreQuestions.forEach(function(ques_more){ %>
+ 								<div class="form-group">
+									<% if (question.question_type == 1) { %>
+									 <div class="custom-control custom-radio">
+	 		                          <input  class="quesClass_<%= question.id %> custom-control-input" id="question_<%= question.id %>_<%= moreCount %>" type="radio" name="corr_answer[<%= question.id %>]"  value="<%= moreCount %>" /> 
+			                          <label for="question_<%= question.id %>_<%= moreCount %>" class="custom-control-label"><%= ques_more %></label>
+			                        </div> 
+									
+									<% }else{ %>
+									
+									<div class="custom-control custom-checkbox">
+	 		                          <input class="quesClass_<%= question.id %> custom-control-input" type="checkbox" id="question_<%= question.id %>_<%= moreCount %>" name="corr_answer[<%= question.id %>][]"  value="<%= moreCount %>" />
+			                          <label for="question_<%= question.id %>_<%= moreCount %>" class="custom-control-label"> <%= ques_more %></label>
+			                        </div>
+									<% } %>
+								</div> 
+							<% moreCount++ }) %>
+
+							<%  } %>
 							<%  if (question.option_c != '') { %>
 							<div class="form-group">
 								<% if (question.question_type == 1) { %>
@@ -245,7 +268,7 @@ including header content which is common for all pages
 		  	var minutes = parseInt(time_formet[1]);
 		  	var seconds = parseInt(time_formet[2]);
 	  	}else{
-	  		var hours = 0;
+	  		var hours = parseInt(time_formet[0]);
 		  	var minutes = parseInt(time_formet[1]);
 		  	var seconds = 0;
 	  	} 
@@ -312,7 +335,7 @@ including header content which is common for all pages
 					  	var minutes = parseInt(time_formet[1]);
 					  	var seconds = parseInt(time_formet[2]);
 				  	}else{
-				  		var hours = 0;
+				  		var hours = parseInt(time_formet[0]);
 					  	var minutes = parseInt(time_formet[1]);
 					  	var seconds = 0;
 				  	}  

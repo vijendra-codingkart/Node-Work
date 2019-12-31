@@ -4,6 +4,7 @@ var url = require('url');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 const questions = require('./admin/questions')
+const users = require('./admin/users')
 
 
 app.use((req, res, next) => {
@@ -45,5 +46,6 @@ app.get('/dashboard', function(req, res) {
 }) 
 
 app.use('/questions', questions)
+app.use('/users', users)
 
 module.exports = app;

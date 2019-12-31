@@ -25,6 +25,13 @@ app.get('/view', function(req, res, next) {
 					data: ''
 				})
 			} else {
+				for(index in rows){
+					var objdata = rows[index];
+					var moreQue = objdata.more_questions;
+					if(moreQue !== ''){
+						rows[index].moreQuestions = JSON.parse(moreQue);
+					} 
+				} 
  				res.render('question/question_list', {
 					title: 'All Questions', 
 					data: rows

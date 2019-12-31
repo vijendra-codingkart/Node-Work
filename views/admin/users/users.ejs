@@ -1,0 +1,109 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ../include/header.ejs %>
+
+<% if (messages.error) { %>
+	<p style="color:red"><%- messages.error %></p>
+<% } %>
+
+<% if (messages.success) { %>
+	<p style="color:green"><%- messages.success %></p>
+<% } %>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Users</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Users</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section> 
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+
+            	<div class="card-header">
+	              <!-- <h3 class="card-title">Questions</h3> -->
+	              <br>
+	            <!--  <a class="btn btn-block btn-primary btn-primary" style="width: 20%" href='/admin/questions/add/'>Add New </a> -->
+
+ 	            </div>
+	            <!-- /.card-header -->
+	            <div class="card-body">
+
+					<table id="example1" class="table table-bordered table-striped" >
+						<thead>
+							<tr >
+								<th>User Name</th>
+								<th>User Email</th> 
+								<th>User Role</th> 
+								<th>User Status</th> 
+								<th>Action</th>
+							</tr>
+						</thead>
+             			<tbody>
+						
+						<!--
+							Using FOREACH LOOP for the users array
+							
+							myArray.forEach(function(el, index) {
+								// el - current element, i - index
+							});
+						-->
+							<% if (data) { %>
+							<% data.forEach(function(user){ %>
+								<tr>
+									<td><%= user.name %></td>
+									<td><%= user.email %></td>
+									<td><%= user.user_role %></td>
+									<% if (user.status == 1) { %>
+									<td><button  class="btn btn-success btn-sm" >Active</i></td>
+									<% }else{ %>
+									<td><button  class="btn btn-info btn-sm" >Deactive</i></td>
+									<% } %> 
+									<td>
+										<div >
+											<a  class="btn btn-info btn-sm" href='#'> <i class="fas fa-edit"></i>
+											 </a> &nbsp;&nbsp;&nbsp;
+
+											 <a  class="btn btn-danger btn-sm" href='#'> Delete</a> &nbsp;						
+ 										</div>
+									</td>
+								</tr>
+							<% }) %>
+							<% } %>
+						</tbody>
+		                <tfoot>
+		                <tr>
+		                   <th>User Name</th>
+							<th>User Email</th> 
+							<th>User Role</th> 
+							<th>User Status</th> 
+							<th>Action</th>
+		                </tr>
+		                </tfoot>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+</div> 
+
+<!--
+including footer content which is common for all pages
+-->
+<%- include ../include/footer.ejs %>

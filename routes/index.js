@@ -24,18 +24,19 @@ app.get('/login', function(req, res, next) {
 app.post('/login', function(req, res, next){
     sess = req.session;	
     sess = null; 
+    sess = req.session;
 	req.assert('email', 'Email is required').notEmpty()           //Validate name
 	req.assert('password', 'Password is required').notEmpty()
-	req.assert('user_role', 'User role is required').notEmpty()
+	// req.assert('user_role', 'User role is required').notEmpty()
 
 	var errors = req.validationErrors()
     
     if( !errors ) 
     {    
-		var user = [ req.sanitize('email').escape().trim(), req.sanitize('password').escape().trim(), req.sanitize('user_role').escape().trim() ]
+		var user = [ req.sanitize('email').escape().trim(), req.sanitize('password').escape().trim()]
 
  		req.getConnection(function(error, conn) {
-			conn.query('SELECT * FROM users WHERE email = ? AND password = ? AND user_role = ?', user, function(err, rows, fields) {
+			conn.query('SELECT * FROM users WHERE email = ? AND password = ?', user, function(err, rows, fields) {
 				if(err) throw err
 				
 				// if user not found
@@ -66,7 +67,7 @@ app.post('/login', function(req, res, next){
 				    				user_role : rows[0].user_role
 				    			}
 				    sess.user_data = user_data;
-				 console.log(sess.email);
+				     
 				    if(rows[0].user_role == 'admin' ){
 				    	res.redirect('/admin/dashboard')
 				    }else{ 
@@ -108,6 +109,39 @@ app.get('/singup', function(req, res, next) {
 	} 
 })
 
+
+app.post('/email_exists', function(req, res, next){
+
+	var email =  req.body.email;
+
+     req.getConnection(function(error, conn) {
+		conn.query('SELECT id FROM users WHERE email = ?', [email], function(err, rows, fields) {
+			if(err) throw err 
+
+			// if user not found
+			if (rows.length <= 0) {
+ 				var response = 
+		    	{
+		    		'status':'0',
+		    		'massage': 'success',
+		    		'massage': ''
+		   		};
+			    res.send(response);
+			    res.end();
+ 			}
+			else { // if user found
+				var response = 
+		    	{
+		    		'status':'1',
+		    		'massage': 'error',
+		    		'massage': 'email already exists'
+		   		};
+			    res.send(response);
+			    res.end(); 	 
+			}			
+		})
+	}) 
+})
 // ADD NEW USER POST ACTION
 app.post('/singup', function(req, res, next){	
 	sess = req.session;
