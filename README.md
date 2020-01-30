@@ -1,4 +1,6 @@
 Node.js, Express & MySQL: Simple Add, Edit, Delete, View (CRUD)
+
+Question Answer (quiz) With admin details
 ========
 
 A simple and basic CRUD application (Create, Read, Update, Delete) using Node.js, Express, MySQL & EJS Templating Engine.
@@ -11,6 +13,8 @@ A simple and basic CRUD application (Create, Read, Update, Delete) using Node.js
 
 ```
 $ node app.js
+/***admin detail**/
+email-pass: admin@admin.com
 ```
 "# NodeWork" 
 "# NodeWork" 
