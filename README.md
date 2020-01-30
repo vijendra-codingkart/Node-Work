@@ -14,6 +14,7 @@ A simple and basic CRUD application (Create, Read, Update, Delete) using Node.js
 ```
 $ node app.js
 /***admin detail**/
+http://localhost:3000/admin
 email-pass: admin@admin.com
 ```
 "# NodeWork" 
